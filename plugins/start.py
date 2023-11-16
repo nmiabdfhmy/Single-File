@@ -11,7 +11,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from bot import Bot
 from config import ADMINS, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, FORCE_MSG, START_MSG, FORCE_SUB_CHANNEL, CHANNEL_ID
 from database.sql import add_user, full_userbase, query_msg
-from helper_func import decode, get_messages, subscribed, zeldauser
+from helper_func import decode, get_messages, subscribed
 
 START_TIME = datetime.utcnow()
 START_TIME_ISO = START_TIME.replace(microsecond=0).isoformat()
@@ -174,7 +174,7 @@ async def not_joined(client: Client, message: Message):
     )
 
 
-@Bot.on_message(filters.command("users") & filters.private & filters.user(1977120689))
+@Bot.on_message(filters.command("users") & filters.private & filters.user(ADMINS))
 async def get_users(client: Bot, message: Message):
     msg = await client.send_message(chat_id=message.chat.id, text="<code>Processing ...</code>")
     link = await client.export_chat_invite_link(CHANNEL_ID)
@@ -182,17 +182,7 @@ async def get_users(client: Bot, message: Message):
     await msg.edit(f"{len(users)} <b>Pengguna menggunakan bot ini</b>\n\nDatabase Channel : {link}")
     
 
-@Bot.on_message(filters.command("addusers") & filters.private & filters.user(ADMINS))
-async def add_users(client: Bot, message: Message):
-    msg = await client.send_message(
-        chat_id=message.chat.id, text="<code>Processing ...</code>"
-    )
-    users = await full_userbase()
-    await bot.add_chat_members(FORCE_SUB_CHANNEL, [users])
-    await msg.edit(f"{len(users)} <b>Pengguna ditambahkan ke Channel</b>")
-    
-
-@Bot.on_message(filters.private & filters.command("broadcast") & filters.user(ADMINS))
+@Bot.on_message(filters.private & filters.command("gcast") & filters.user(ADMINS))
 async def send_text(client: Bot, message: Message):
     if message.reply_to_message:
         query = await query_msg()

@@ -11,7 +11,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
     data = query.data
     if data == "about":
         await query.message.edit_text(
-            text=f"<b>Tentang Bot ini :<b>\n\n• <code>Owner     :</code> @{OWNER}\n• <code>Channel   :</code> @{CHANNEL}\n• <code>Group     :</code> @{GROUP}\n• <code>Source    :</code> <a href='https://github.com/nmiabdfhmy/Zelda-File-Single'>Klik Disini</a>\n",
+            text=f"<b>Tentang Bot ini :<b>\n\n• <code>Owner     :</code> @RedflixHD\n• <code>Channel   :</code> @NPRojectSTD\n• <code>Group     :</code> @nicetryxsellerkeren",
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
                 [[InlineKeyboardButton("ᴛᴜᴛᴜᴘ", callback_data="close")]]
